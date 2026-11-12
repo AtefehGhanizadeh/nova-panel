@@ -7,6 +7,7 @@ import { UsersPage } from '@/Pages/UsersPage'
 import { ROUTES } from '@/Routes/paths'
 import { ProtectedRoute } from '@/Routes/ProtectedRoute'
 import { PublicOnlyRoute } from '@/Routes/PublicOnlyRoute'
+import { AdminLayout } from '@/Components/Layout/AdminLayout'
 
 const router = createBrowserRouter([
   {
@@ -16,8 +17,13 @@ const router = createBrowserRouter([
   {
     element: <ProtectedRoute />,
     children: [
-      { path: ROUTES.products, element: <ProductsPage /> },
-      { path: ROUTES.users, element: <UsersPage /> },
+      {
+        element: <AdminLayout />,
+        children: [
+          { path: ROUTES.products, element: <ProductsPage /> },
+          { path: ROUTES.users, element: <UsersPage /> },
+        ],
+      },
     ],
   },
   { path: ROUTES.home, element: <Navigate to={ROUTES.products} replace /> },
