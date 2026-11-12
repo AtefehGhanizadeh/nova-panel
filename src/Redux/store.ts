@@ -2,12 +2,15 @@ import { configureStore, type ThunkAction, type UnknownAction } from '@reduxjs/t
 import authReducer from '@/Redux/slices/authSlice'
 import productsReducer from '@/Redux/slices/productsSlice'
 import settingsReducer from '@/Redux/slices/settingsSlice'
+import usersReducer from '@/Redux/slices/usersSlice'
+
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     products: productsReducer,
     settings: settingsReducer,
+    users: usersReducer,
   },
 })
 
