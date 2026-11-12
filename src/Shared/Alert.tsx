@@ -1,10 +1,10 @@
-import { type ReactNode, useEffect } from 'react'
-import styled from 'styled-components'
 import { AlertCircleIcon } from '@/assets/Icons/AlertCircleIcon'
 import { CheckCircleIcon } from '@/assets/Icons/CheckCircleIcon'
 import { CloseIcon } from '@/assets/Icons/CloseIcon'
 import { useTranslation } from '@/Dictionary/useTranslation'
 import { Button } from '@/Shared/Button'
+import { type ReactNode, useEffect, useEffectEvent } from 'react'
+import styled from 'styled-components'
 
 type AlertVariant = 'success' | 'error'
 
@@ -37,13 +37,14 @@ interface AlertProps {
 
 export function Alert({ variant, children, onClose, autoHideMs }: AlertProps) {
   const { t } = useTranslation()
+  const canClose = Boolean(onClose)
+  const closeAfterTimeout = useEffectEvent(() => onClose?.())
 
   useEffect(() => {
-    if (!autoHideMs || !onClose) return
-    const timer = window.setTimeout(onClose, autoHideMs)
+    if (!autoHideMs || !canClose) return
+    const timer = window.setTimeout(closeAfterTimeout, autoHideMs)
     return () => window.clearTimeout(timer)
-  }, [autoHideMs, onClose])
-
+  }, [autoHideMs, canClose])
   return (
     <Box $variant={variant} role={variant === 'error' ? 'alert' : 'status'}>
       {variant === 'success' ? <CheckCircleIcon size={18} /> : <AlertCircleIcon size={18} />}
