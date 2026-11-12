@@ -16,10 +16,14 @@ const StartIcon = styled.span`
   pointer-events: none;
 `
 
-const EndAdornment = styled.span`
+const EndAdornment = styled.span<{ $dir?: 'ltr' | 'rtl' }>`
   position: absolute;
-  inset-inline-end: ${({ theme }) => theme.space.xxs};
+  right: ${({ $dir }) => ($dir === 'rtl' ? 'auto' : '8px')};
+  left: ${({ $dir }) => ($dir === 'rtl' ? '8px' : 'auto')};
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
 `
 
 const StyledInput = styled.input<{ $hasStartIcon: boolean; $hasEndAdornment: boolean }>`
@@ -31,28 +35,30 @@ const StyledInput = styled.input<{ $hasStartIcon: boolean; $hasEndAdornment: boo
       padding-inline-start: calc(${theme.space.sm} + 28px);
     `}
 
-  ${({ $hasEndAdornment, theme }) =>
+    ${({ $hasEndAdornment }) =>
     $hasEndAdornment &&
     css`
-      padding-inline-end: calc(${theme.space.xs} + 36px);
+      padding-inline-end: 44px;
     `}
 `
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   startIcon?: ReactNode
   endAdornment?: ReactNode
+   dir?: 'ltr' | 'rtl'
 }
 
-export function Input({ startIcon, endAdornment, ...rest }: InputProps) {
+export function Input({ startIcon, endAdornment,dir, ...rest }: InputProps) {
   return (
     <Wrapper>
       {startIcon && <StartIcon>{startIcon}</StartIcon>}
       <StyledInput
+        dir={dir}
         $hasStartIcon={Boolean(startIcon)}
         $hasEndAdornment={Boolean(endAdornment)}
         {...rest}
       />
-      {endAdornment && <EndAdornment>{endAdornment}</EndAdornment>}
+      {endAdornment && <EndAdornment $dir={dir}>{endAdornment}</EndAdornment>}
     </Wrapper>
   )
 }
