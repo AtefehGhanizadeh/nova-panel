@@ -24,9 +24,10 @@ export function isApiError(value: unknown): value is ApiError {
   )
 }
 
-
 export function handleApiError(error: unknown): ApiError {
   if (isApiError(error)) return error
+
+  if (error instanceof Error && isApiError(error.cause)) return error.cause
 
   if (axios.isAxiosError(error)) {
     if (error.code && TIMEOUT_CODES.includes(error.code)) {
