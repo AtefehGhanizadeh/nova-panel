@@ -29,7 +29,7 @@ const Title = styled.h1`
 `
 
 const Description = styled.p`
-  color: ${({ theme }) => theme.colors.textMuted};
+  max-width: 460px;
 `
 
 const HomeLink = styled(Link)`
