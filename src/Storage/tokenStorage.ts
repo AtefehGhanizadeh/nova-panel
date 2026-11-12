@@ -1,5 +1,7 @@
+import { cookieStorage } from '@/Storage/cookieStorage'
 import type { AuthSession } from '@/types/Auth'
 import { StorageKey } from '@/types/Enums/StorageKey'
+
 
 function isAuthSession(value: unknown): value is AuthSession {
   return (
@@ -16,7 +18,7 @@ function isAuthSession(value: unknown): value is AuthSession {
 export const tokenStorage = {
   getSession(): AuthSession | null {
     try {
-      const raw = sessionStorage.getItem(StorageKey.Auth)
+      const raw = cookieStorage.get(StorageKey.Auth)
       if (!raw) return null
       const parsed: unknown = JSON.parse(raw)
       return isAuthSession(parsed) ? parsed : null
@@ -30,18 +32,10 @@ export const tokenStorage = {
   },
 
   setSession(session: AuthSession): void {
-    try {
-      sessionStorage.setItem(StorageKey.Auth, JSON.stringify(session))
-    } catch {
-      // The session still works in memory; it just will not survive a refresh.
-    }
+    cookieStorage.set(StorageKey.Auth, JSON.stringify(session))
   },
 
   clearSession(): void {
-    try {
-      sessionStorage.removeItem(StorageKey.Auth)
-    } catch {
-      // Nothing to clear when storage is unavailable.
-    }
+    cookieStorage.remove(StorageKey.Auth)
   },
 }
