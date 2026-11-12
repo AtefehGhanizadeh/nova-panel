@@ -34,7 +34,6 @@ export const en: Dictionary = {
     },
   },
   auth: {
-    title: 'Sign in to the admin panel',
     subtitle: 'Sign in to your account to continue',
     username: 'Username',
     usernamePlaceholder: 'Enter your username',

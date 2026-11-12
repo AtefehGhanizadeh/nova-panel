@@ -33,7 +33,6 @@ export const fa = {
     },
   },
   auth: {
-    title: 'ورود به پنل مدیریت',
     subtitle: 'برای ادامه وارد حساب کاربری خود شوید',
     username: 'نام کاربری',
     usernamePlaceholder: 'نام کاربری خود را وارد کنید',

@@ -7,8 +7,8 @@ import { preferencesStorage } from '@/Storage/preferencesStorage'
 import { GlobalStyle } from '@/styles/GlobalStyle'
 import { themes } from '@/styles/theme'
 import { getTextDirection } from '@/Utils/getTextDirection'
+import { AppRouter } from '@/Routes/AppRouter'
 
-/** Applies and persists the user's preferences; needs to live inside the Redux Provider. */
 function ThemedApp() {
   const language = useAppSelector((state) => state.settings.language)
   const theme = useAppSelector((state) => state.settings.theme)
@@ -26,6 +26,7 @@ function ThemedApp() {
   return (
     <ThemeProvider theme={themes[theme]}>
       <GlobalStyle />
+      <AppRouter />
     </ThemeProvider>
   )
 }
